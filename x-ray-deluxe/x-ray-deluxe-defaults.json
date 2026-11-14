@@ -1,0 +1,39 @@
+{
+  "oreIds": [
+    14,
+    15,
+    16,
+    21,
+    56,
+    73,
+    74,
+    135,
+    140,
+    247,
+    248,
+    249
+  ],
+  "description": "Default selected block IDs. 135 includes all 8 installed Nether Ores variants. 140 includes all RedPower ore variants. Lava 10/11 is always visible.",
+  "groups": {
+    "vanilla": [
+      14,
+      15,
+      16,
+      21,
+      56,
+      73,
+      74
+    ],
+    "netherOres": [
+      135
+    ],
+    "redPower": [
+      140
+    ],
+    "industrialCraft2": [
+      247,
+      248,
+      249
+    ]
+  }
+}
