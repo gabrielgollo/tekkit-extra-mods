@@ -11,5 +11,5 @@ jar cf "$project/dist/gabrielgollo_controller-assistant-$version-mc1.2.5.jar" -C
 
 if [ "${1:-}" = "--install" ]; then
   cp "$project/dist/gabrielgollo_controller-assistant-$version-mc1.2.5.jar" "$pack/mods/"
-  rm -f "$pack/mods/controller-assistant-0.1.0-mc1.2.5.jar" "$pack/mods/gabrielgollo_controller-assistant-0.1.0-mc1.2.5.jar"
+  rm -f "$pack/mods/controller-assistant-0.1.0-mc1.2.5.jar" "$pack/mods/gabrielgollo_controller-assistant-1.0.0-mc1.2.5.jar"
 fi
