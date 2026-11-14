@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 project="$(cd "$(dirname "$0")/.." && pwd)"
-pack="$project/../../technic/modpacks/tekkit"
+pack="$project/../../../technic/modpacks/tekkit"
 cp="$project/build:$pack/bin/modpack.jar:$pack/bin/minecraft.jar:$pack/mods/industrialcraft-2-client_1.97.jar:$pack/../../libraries/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar"
 scratch="$(mktemp -d)"
 trap 'rm -rf "$scratch"' EXIT

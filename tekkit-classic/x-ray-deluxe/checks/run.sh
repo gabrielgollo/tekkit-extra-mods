@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 project="$(cd "$(dirname "$0")/.." && pwd)"
-pack="$project/../../technic/modpacks/tekkit"
+pack="$project/../../../technic/modpacks/tekkit"
 scratch="$(mktemp -d)"
 trap 'rm -rf "$scratch"' EXIT
 classpath="$project/build:$pack/bin/modpack.jar:$pack/bin/minecraft.jar:$pack/mods/buildcraft-client-A-core-2.2.14.zip:$pack/mods/buildcraft-client-B-energy-2.2.14.zip"

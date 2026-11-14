@@ -2,7 +2,8 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PACK_ROOT="$(cd "$PROJECT_DIR/../../technic/modpacks/tekkit" && pwd)"
+VERSION="$(cat "$PROJECT_DIR/../VERSION")"
+PACK_ROOT="$(cd "$PROJECT_DIR/../../../technic/modpacks/tekkit" && pwd)"
 BUILD_DIR="$PROJECT_DIR/build"
 DIST_DIR="$PROJECT_DIR/dist"
 mkdir -p "$BUILD_DIR" "$DIST_DIR"
@@ -14,7 +15,7 @@ javac -source 8 -target 8 -Xlint:-options \
   "$PROJECT_DIR/src/XRayDeluxeGui.java"
 unzip -p "$PACK_ROOT/bin/minecraft.jar" terrain.png > "$BUILD_DIR/xray-hidden.png"
 cp "$PROJECT_DIR/x-ray-deluxe-defaults.json" "$BUILD_DIR/x-ray-deluxe-defaults.json"
-JAR="$DIST_DIR/gabrielgollo_x-ray-deluxe-1.0.0-mc1.2.5.jar"
+JAR="$DIST_DIR/gabrielgollo_x-ray-deluxe-$VERSION-mc1.2.5.jar"
 jar cf "$JAR" -C "$BUILD_DIR" .
 if [ "${1:-}" = "--install" ]; then
   mkdir -p "$PACK_ROOT/mods"

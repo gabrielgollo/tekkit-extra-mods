@@ -6,7 +6,7 @@ These instructions apply to both mods in this repository unless a project-level 
 
 - Keep each mod self-contained in its existing directory. Put Java sources in `src/`, checks in `checks/`, and project documentation beside its build script.
 - Follow the existing Java style and legacy ModLoader/Forge APIs used by that mod. Avoid broad refactors or new dependencies when a focused change is sufficient.
-- Keep compatibility with Minecraft 1.2.5, the pack's Forge Mod Loader, and Java 8 bytecode. Do not use APIs or language features newer than Java 8.
+- Match the Minecraft version, loader, and Java bytecode target specified by the pack directory. For `tekkit-classic`, this means Minecraft 1.2.5, its Forge Mod Loader, and Java 8 bytecode. Do not use Java language features newer than Java 8 unless a pack explicitly requires a newer runtime.
 - Preserve the existing mod IDs/classes, control behavior, configuration formats, and jar naming unless the requested change requires otherwise.
 - Keep the root build script and each project's build script working. Generated class files, build directories, and jars belong in ignored `build/` or `dist/` directories, not in source folders.
 
@@ -19,6 +19,6 @@ These instructions apply to both mods in this repository unless a project-level 
 
 ## Build and validation
 
-- Use `./build.sh` at the repository root to build both mods. Use `./build.sh --install` only when the pack's `mods/` folder should also be updated.
+- Use `./build.sh tekkit-classic` at the repository root to build the Classic mods. Add `--install` only when the local pack's `mods/` folder should also be updated.
 - For a focused project build, use that mod's own `build.sh` and follow its documented options.
 - Keep validation notes factual: distinguish checks that were run from behavior that still needs testing on the target game or controller hardware.

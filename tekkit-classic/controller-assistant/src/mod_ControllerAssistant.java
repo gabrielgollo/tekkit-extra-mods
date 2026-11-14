@@ -12,7 +12,7 @@ public final class mod_ControllerAssistant extends BaseMod {
     private boolean titleMouseDown;
     private int previousSlot=-1;
     final AssistantPad pad=new AssistantPad();
-    public String getVersion(){return "0.1.0-mc1.2.5";}
+    public String getVersion(){return "1.0.0-mc1.2.5";}
     public String getName(){return "Controller Assistant";}
     public void load(){
         instance=this;

@@ -1,21 +1,24 @@
-# Mods do Gabriel Gollo
+# Tekkit Extra Mods
 
-Monorepo dos mods cliente para Minecraft. Cada mod mantém seu próprio código, documentação e script de build.
+Monorepo for client-side mods adapted to individual Tekkit packs. Each pack has its own directory because Minecraft, Forge, and mod APIs differ between pack generations.
 
-## Projetos
+## Pack directories
 
-- [`controller-assistant/`](controller-assistant/README.md): navegação com controle e assistências para Tekkit Classic.
-- [`x-ray-deluxe/`](x-ray-deluxe/README.md): X-Ray configurável para Tekkit Classic.
-
-As versões atuais foram feitas especificamente para Minecraft 1.2.5 e Forge Mod Loader do Tekkit Classic; não são jars universais para outras versões.
+- [`tekkit-classic/`](tekkit-classic/README.md): Minecraft 1.2.5 / Tekkit Classic. Includes Controller Assistant and X-Ray Deluxe.
+- [`tekkit-2/`](tekkit-2/README.md): scaffold for future Tekkit 2 ports; no compatible jars are available yet.
+- [`tekkit-smp/`](tekkit-smp/README.md): scaffold for future Tekkit SMP ports; no compatible jars are available yet.
 
 ## Build
 
-Este workspace espera encontrar o pack em `../technic/modpacks/tekkit`.
+The current local build expects Tekkit Classic at `../technic/modpacks/tekkit` and requires JDK 8 or newer.
 
 ```sh
-./build.sh                 # compila os dois jars em suas pastas dist/
-./build.sh --install       # compila e instala os dois jars na pasta mods do pack
+./build.sh tekkit-classic                 # build both Classic jars into dist/
+./build.sh tekkit-classic --install       # build and install into the local pack
 ```
 
-Também é possível construir um projeto isoladamente com `./controller-assistant/build.sh` ou `./x-ray-deluxe/build.sh`. Requer JDK 8 ou superior.
+Each mod can also be built independently with its own `build.sh`.
+
+## Release versioning
+
+Each pack has an independent release version recorded in its `VERSION` file. Tag names include the pack to avoid collisions, for example `tekkit-classic-v1.0.0`, `tekkit-2-v1.0.0`, and `tekkit-smp-v1.0.0`. Release assets must be built for and named with their target pack and Minecraft version. Never attach a jar from one pack directory to another pack's release.

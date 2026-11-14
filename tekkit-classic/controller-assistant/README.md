@@ -20,7 +20,7 @@ Settings menu: automatic tool, automatic jump, automatic treetap. Changes save i
 
 ## Development status
 
-`./build.sh` creates `dist/gabrielgollo_controller-assistant-0.1.0-mc1.2.5.jar`; `./build.sh --install` also copies it into the pack mods directory. `./checks/run.sh` verifies deadzone, resin rules, and vanilla tool selection under the launcher's Java 8. The settings panel was verified inside Minecraft; real IC2 electric tools and simulated JInput profiles passed tests. Physical controller input, GUI navigation by gamepad and driver axis mapping still require runtime validation. See `VALIDATION.md`. Split-trigger devices are supported through the profile; reconnect detection still depends on the devices exposed by the JInput environment.
+`./build.sh` creates `dist/gabrielgollo_controller-assistant-1.0.0-mc1.2.5.jar`; `./build.sh --install` also copies it into the pack mods directory. `./checks/run.sh` verifies deadzone, resin rules, and vanilla tool selection under the launcher's Java 8. The settings panel was verified inside Minecraft; real IC2 electric tools and simulated JInput profiles passed checks. See `VALIDATION.md` for target-device validation status. Split-trigger devices are supported through the profile; reconnect detection still depends on the devices exposed by the JInput environment.
 
 ### Split trigger profile
 
