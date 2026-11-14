@@ -2,7 +2,7 @@
 
 ## Verified
 
-- Jar installed at `technic/modpacks/tekkit/mods/gabrielgollo_controller-assistant-1.0.0-mc1.2.5.jar`.
+- Jar installed at `technic/modpacks/tekkit/mods/gabrielgollo_controller-assistant-0.1.0-mc1.2.5.jar`.
 - Full pack startup with 44 mods succeeded on the launcher's Java 8.
 - Settings panel captured from Minecraft framebuffer: `evidence/settings-en.png`.
 - `checks/run.sh` passes: GUI option hit areas; stick deadzone; split-trigger normalization; wet/dry IC2 resin-face rules; shovel/pickaxe/axe selection; real IC2 normal/electric treetap and sufficient-energy checks; charged/discharged IC2 drill and chainsaw selection; simulated JInput component reading, button remapping/release, and device diagnostics.

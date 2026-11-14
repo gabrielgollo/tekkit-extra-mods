@@ -1,0 +1,10 @@
+[
+  {
+    "modid": "mod_XRayDeluxe",
+    "name": "gabrielgollo_X-Ray Deluxe",
+    "description": "Configurable ore and lava visibility for Tekkit Classic 1.2.5.",
+    "version": "1.0.0-mc1.2.5",
+    "authors": ["Gabriel Gollo"],
+    "url": "https://github.com/gabrielgollo/tekkit-extra-mods"
+  }
+]

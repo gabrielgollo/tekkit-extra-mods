@@ -21,7 +21,7 @@ public final class mod_XRayDeluxe extends BaseMod implements forge.IRenderWorldL
     private static final int KEY_TOGGLE = 45, KEY_MENU = 46; // X / C
 
     public String getVersion() { return "1.0.0-mc1.2.5"; }
-    public String getName() { return "X-Ray Deluxe"; }
+    public String getName() { return "gabrielgollo_X-Ray Deluxe"; }
 
     public void load() {
         readConfig();

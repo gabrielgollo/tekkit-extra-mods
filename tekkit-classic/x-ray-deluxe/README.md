@@ -1,4 +1,4 @@
-# X-Ray Deluxe for Tekkit Classic 1.2.5
+# gabrielgollo_X-Ray Deluxe for Tekkit Classic 1.2.5
 
 Client-side ModLoader/BaseMod mod, compiled against Forge Mod Loader 2.2 from the Tekkit Classic pack.
 

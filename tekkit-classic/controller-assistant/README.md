@@ -1,4 +1,4 @@
-# Controller Assistant — Tekkit Classic 1.2.5
+# gabrielgollo_Controller Assistant — Tekkit Classic 1.2.5
 
 Development build, compiled against this pack's Minecraft/Forge jars and JInput 2.0.5. Source lives separately from X-Ray Deluxe.
 
@@ -20,7 +20,7 @@ Settings menu: automatic tool, automatic jump, automatic treetap. Changes save i
 
 ## Development status
 
-`./build.sh` creates `dist/gabrielgollo_controller-assistant-1.0.0-mc1.2.5.jar`; `./build.sh --install` also copies it into the pack mods directory. `./checks/run.sh` verifies deadzone, resin rules, and vanilla tool selection under the launcher's Java 8. The settings panel was verified inside Minecraft; real IC2 electric tools and simulated JInput profiles passed checks. See `VALIDATION.md` for target-device validation status. Split-trigger devices are supported through the profile; reconnect detection still depends on the devices exposed by the JInput environment.
+`./build.sh` creates `dist/gabrielgollo_controller-assistant-0.1.0-mc1.2.5.jar`; `./build.sh --install` also copies it into the pack mods directory. `./checks/run.sh` verifies deadzone, resin rules, and vanilla tool selection under the launcher's Java 8. The settings panel was verified inside Minecraft; real IC2 electric tools and simulated JInput profiles passed checks. See `VALIDATION.md` for target-device validation status. Split-trigger devices are supported through the profile; reconnect detection still depends on the devices exposed by the JInput environment.
 
 ### Split trigger profile
 
