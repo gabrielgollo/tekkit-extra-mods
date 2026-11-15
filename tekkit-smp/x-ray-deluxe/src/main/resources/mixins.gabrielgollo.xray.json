@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.gabrielgollo.xray.client.mixin",
+  "refmap": "mixins.gabrielgollo.xray.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "MixinBlockRendererDispatcher",
+    "MixinBlock",
+    "MixinBufferBuilder"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

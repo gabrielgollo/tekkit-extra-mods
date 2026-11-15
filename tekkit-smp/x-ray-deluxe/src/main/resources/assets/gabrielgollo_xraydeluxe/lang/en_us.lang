@@ -1,0 +1,11 @@
+key.ggab_xray.toggle.v2=Toggle X-Ray
+key.ggab_xray.menu.v2=Open X-Ray Deluxe settings
+key.categories.ggab_xray=Gabriel Gollo Mods
+gui.ggab_xray.title=gabrielgollo_X-Ray Deluxe
+gui.ggab_xray.toggle=X-Ray
+gui.ggab_xray.fullbright=Fullbright
+gui.ggab_xray.ores=Ore selection
+gui.ggab_xray.range=Range
+gui.ggab_xray.reset=Reset defaults
+gui.ggab_xray.opacity=Hidden opacity
+gui.ggab_xray.help=Scroll to browse ores | See Controls for key bindings | ESC closes

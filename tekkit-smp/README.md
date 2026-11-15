@@ -1,5 +1,21 @@
 # Tekkit SMP Mods
 
-This directory is reserved for mods adapted specifically to Tekkit SMP. No compatible mod source or release jars have been ported here yet. Do not copy the Tekkit Classic 1.2.5 jars into this directory; they are not verified for Tekkit SMP.
+Target: Tekkit SMP, Minecraft 1.12.2, Forge 14.23.5.2860. These ports are separate from the Minecraft 1.2.5 Tekkit Classic builds.
 
-Add each port as a self-contained project here, including its own source, build instructions, compatibility notes, and validation evidence. Tekkit SMP releases will use independent versions and tags such as `tekkit-smp-v1.0.0`.
+Pack release: `1.0.0`.
+
+## Mods
+
+- [`controller-assistant/`](controller-assistant/README.md): controller input, menu navigation, and gameplay assistance.
+- [`x-ray-deluxe/`](x-ray-deluxe/README.md): configurable ore highlighting and X-Ray rendering.
+
+## Build
+
+Requires JDK 8 and the Tekkit SMP files at `../technic/modpacks/tekkit-smp`.
+
+```sh
+./build.sh tekkit-smp
+./build.sh tekkit-smp --install
+```
+
+MixinBooter is required by X-Ray Deluxe for block rendering; it is included in the Tekkit SMP pack.

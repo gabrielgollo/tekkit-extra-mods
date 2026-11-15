@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'eclipse'
+
+version = "${file('VERSION').text.trim()}-mc1.12.2"
+group = 'com.gabrielgollo'
+archivesBaseName = 'gabrielgollo_x-ray-deluxe'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20171003-1.12'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+        }
+    }
+}
+
+def smpRoot = file('../../../technic/modpacks/tekkit-smp')
+def mixinBooter = file("${smpRoot}/mods/!mixinbooter-10.6.jar")
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+    compileOnly files(mixinBooter)
+    annotationProcessor files(mixinBooter)
+    annotationProcessor 'org.ow2.asm:asm-tree:6.2.1'
+}
+
+mixin {
+    add sourceSets.main, 'mixins.gabrielgollo.xray.refmap.json'
+    config 'mixins.gabrielgollo.xray.json'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar {
+    destinationDir = file("$projectDir/dist")
+    manifest.attributes([
+        'Specification-Title': 'gabrielgollo_X-Ray Deluxe',
+        'Specification-Vendor': 'Gabriel Gollo',
+        'Specification-Version': project.version,
+        'Implementation-Title': archivesBaseName,
+        'Implementation-Version': project.version,
+        'MixinConfigs': 'mixins.gabrielgollo.xray.json'
+    ])
+    finalizedBy 'reobfJar'
+}

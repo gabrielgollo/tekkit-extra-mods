@@ -1,0 +1,11 @@
+[
+  {
+    "modid": "gabrielgollo_xraydeluxe",
+    "name": "gabrielgollo_X-Ray Deluxe",
+    "description": "Configurable ore and lava visibility for Tekkit SMP 1.12.2.",
+    "version": "${version}",
+    "mcversion": "1.12.2",
+    "authors": ["Gabriel Gollo"],
+    "url": "https://github.com/gabrielgollo/tekkit-extra-mods"
+  }
+]

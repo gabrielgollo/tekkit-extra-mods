@@ -1,0 +1,10 @@
+key.ggab_controllerassistant.settings=Abrir configuracoes do Controller Assistant
+key.categories.ggab_controllerassistant=Mods do Gabriel Gollo
+gui.ggab_controllerassistant.title=gabrielgollo_Controller Assistant
+gui.ggab_controllerassistant.auto_tool=Ferramenta automatica
+gui.ggab_controllerassistant.auto_jump=Pulo automatico
+gui.ggab_controllerassistant.auto_treetap=Treetap automatico
+gui.ggab_controllerassistant.controller=Controle
+gui.ggab_controllerassistant.axes=Eixos
+gui.ggab_controllerassistant.scan=Buscar controles novamente
+gui.ggab_controllerassistant.done=Concluir

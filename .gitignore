@@ -2,3 +2,5 @@
 **/dist/
 *.class
 .DS_Store
+**/.gradle/
+**/run/

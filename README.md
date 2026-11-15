@@ -6,15 +6,17 @@ Monorepo for client-side mods adapted to individual Tekkit packs. Each pack has 
 
 - [`tekkit-classic/`](tekkit-classic/README.md): Minecraft 1.2.5 / Tekkit Classic. Includes Controller Assistant and X-Ray Deluxe.
 - [`tekkit-2/`](tekkit-2/README.md): scaffold for future Tekkit 2 ports; no compatible jars are available yet.
-- [`tekkit-smp/`](tekkit-smp/README.md): scaffold for future Tekkit SMP ports; no compatible jars are available yet.
+- [`tekkit-smp/`](tekkit-smp/README.md): Forge 1.12.2 ports of Controller Assistant and X-Ray Deluxe.
 
 ## Build
 
-The current local build expects Tekkit Classic at `../technic/modpacks/tekkit` and requires JDK 8 or newer.
+The local builds expect Tekkit Classic at `../technic/modpacks/tekkit` and Tekkit SMP at `../technic/modpacks/tekkit-smp`; both require JDK 8.
 
 ```sh
 ./build.sh tekkit-classic                 # build both Classic jars into dist/
 ./build.sh tekkit-classic --install       # build and install into the local pack
+./build.sh tekkit-smp                     # build both SMP jars into dist/
+./build.sh tekkit-smp --install           # build and install into the local pack
 ```
 
 Each mod can also be built independently with its own `build.sh`.

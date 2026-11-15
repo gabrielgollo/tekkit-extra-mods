@@ -1,0 +1,11 @@
+key.ggab_xray.toggle.v2=Alternar X-Ray
+key.ggab_xray.menu.v2=Abrir configuracoes do X-Ray Deluxe
+key.categories.ggab_xray=Mods do Gabriel Gollo
+gui.ggab_xray.title=gabrielgollo_X-Ray Deluxe
+gui.ggab_xray.toggle=X-Ray
+gui.ggab_xray.fullbright=Clarear
+gui.ggab_xray.ores=Selecao de minerios
+gui.ggab_xray.range=Alcance
+gui.ggab_xray.reset=Restaurar padrao
+gui.ggab_xray.opacity=Opacidade oculta
+gui.ggab_xray.help=Teclas podem ser alteradas em Controles | ESC fecha
