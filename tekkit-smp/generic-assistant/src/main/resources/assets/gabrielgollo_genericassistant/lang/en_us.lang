@@ -1,0 +1,12 @@
+key.ggab_genericassistant.settings=Open Generic Assistant settings
+key.categories.ggab_genericassistant=Gabriel Gollo Mods
+gui.ggab_genericassistant.title=gabrielgollo_Generic Assistant
+gui.ggab_genericassistant.auto_tool=Automatic tool
+gui.ggab_genericassistant.auto_jump=Automatic jump
+gui.ggab_genericassistant.auto_treetap=Automatic treetap
+gui.ggab_genericassistant.controller=Controller
+gui.ggab_genericassistant.axes=Axes
+gui.ggab_genericassistant.scan=Scan controllers again
+gui.ggab_genericassistant.done=Done
+gui.ggab_genericassistant.refill_hotbar=Refill hotbar
+gui.ggab_genericassistant.replace_broken_tool=Replace broken tool

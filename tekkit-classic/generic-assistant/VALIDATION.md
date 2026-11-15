@@ -1,0 +1,23 @@
+# Validation and remaining gate
+
+## Verified
+
+- Renamed release artifact: `gabrielgollo_generic-assistant-1.0.0-mc1.2.5.jar`. Prior live input checks predate the rename and inventory features.
+- Full pack startup with 44 mods succeeded on the launcher's Java 8.
+- Historical settings screenshots predate the renamed screen and were removed to avoid presenting outdated UI.
+- `checks/run.sh` passes: GUI option hit areas; stick deadzone; split-trigger normalization; wet/dry IC2 resin-face rules; shovel/pickaxe/axe selection; real IC2 normal/electric treetap and sufficient-energy checks; charged/discharged IC2 drill and chainsaw selection; simulated JInput component reading, button remapping/release, and device diagnostics.
+- The IC2 electric tool evaluator avoids calling the drill efficiency method that plays sounds as a side effect.
+
+## Z1E report
+
+The user confirmed that the controller and X-Ray work on the Z1E. A follow-up report said the game still needed a screen click at startup. Menu input was then changed to remain active while the Minecraft window is unfocused, but that specific fix has not yet been reconfirmed on the Z1E. The initial menu focus behavior therefore remains unverified.
+
+The Linux development session cannot read `/dev/input/event*` (root:input, 0660; current user is not in input), and JInput reports zero accessible controllers. No diagnostic mod remains installed.
+
+## Generic Assistant inventory features
+
+The mod, package names, assets, configuration paths, build scripts, and documentation were renamed to Generic Assistant. Both packs use mod version 1.0.0. Legacy configuration names remain only for migration and old-JAR cleanup.
+
+Classic checks use real Minecraft classes with an isolated client to verify depletion, broken-tool replacement, pickup/place inventory clicks without duplication, and GUI/world/slot/drop/option guards. They also cover matching item variants, excluding other hotbar slots, five setting hit areas, and the existing IC2/gamepad behavior. SMP isolated checks exercise the production hotbar tracker with inventory fixtures: depleted stacks, broken tools, normal inventory swap calls, independent option flags, drop suppression, GUI/cursor/world/slot guards, NBT/variant matching, and unusable tools. Forge compilation validates the real SMP inventory API calls.
+
+Live visual verification and inventory synchronization on a multiplayer server remain unverified.

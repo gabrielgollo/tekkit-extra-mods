@@ -4,7 +4,7 @@ Target: Tekkit Classic, Minecraft 1.2.5, Forge Mod Loader 2.2. Pack release: `1.
 
 ## Mods
 
-- [`controller-assistant/`](controller-assistant/README.md): gamepad menu navigation and gameplay assistance.
+- [`generic-assistant/`](generic-assistant/README.md): gamepad menu navigation and gameplay assistance.
 - [`x-ray-deluxe/`](x-ray-deluxe/README.md): configurable ore and lava visibility.
 - [`world-sync/`](world-sync/README.md): synchronize single-player saves with a private S3-compatible bucket.
 

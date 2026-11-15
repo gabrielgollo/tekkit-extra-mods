@@ -1,6 +1,6 @@
 # Repository Instructions
 
-These instructions apply to both mods in this repository unless a project-level `AGENTS.md` overrides them.
+These instructions apply to all mods in this repository unless a project-level `AGENTS.md` overrides them.
 
 ## Preserve the project style
 

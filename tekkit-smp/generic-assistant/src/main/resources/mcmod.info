@@ -1,0 +1,13 @@
+[
+  {
+    "modid": "gabrielgollo_genericassistant",
+    "name": "gabrielgollo_Generic Assistant",
+    "description": "Gamepad support, automatic tools, hotbar refill, and broken-tool replacement for Tekkit SMP 1.12.2.",
+    "version": "${version}",
+    "mcversion": "1.12.2",
+    "authors": ["Gabriel Gollo"],
+    "credits": "Created by Gabriel Gollo",
+    "logoFile": "",
+    "url": "https://github.com/gabrielgollo/tekkit-extra-mods"
+  }
+]

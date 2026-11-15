@@ -4,9 +4,9 @@ Monorepo for client-side mods adapted to individual Tekkit packs. Each pack has 
 
 ## Pack directories
 
-- [`tekkit-classic/`](tekkit-classic/README.md): Minecraft 1.2.5 / Tekkit Classic. Includes Controller Assistant, X-Ray Deluxe, and World Sync.
+- [`tekkit-classic/`](tekkit-classic/README.md): Minecraft 1.2.5 / Tekkit Classic. Includes Generic Assistant, X-Ray Deluxe, and World Sync.
 - [`tekkit-2/`](tekkit-2/README.md): scaffold for future Tekkit 2 ports; no compatible jars are available yet.
-- [`tekkit-smp/`](tekkit-smp/README.md): Forge 1.12.2 ports of Controller Assistant, X-Ray Deluxe, and World Sync.
+- [`tekkit-smp/`](tekkit-smp/README.md): Forge 1.12.2 ports of Generic Assistant, X-Ray Deluxe, and World Sync.
 
 ## Build
 

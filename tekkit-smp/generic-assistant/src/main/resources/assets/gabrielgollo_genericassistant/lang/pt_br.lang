@@ -1,0 +1,12 @@
+key.ggab_genericassistant.settings=Abrir configuracoes do Generic Assistant
+key.categories.ggab_genericassistant=Mods do Gabriel Gollo
+gui.ggab_genericassistant.title=gabrielgollo_Generic Assistant
+gui.ggab_genericassistant.auto_tool=Ferramenta automatica
+gui.ggab_genericassistant.auto_jump=Pulo automatico
+gui.ggab_genericassistant.auto_treetap=Treetap automatico
+gui.ggab_genericassistant.controller=Controle
+gui.ggab_genericassistant.axes=Eixos
+gui.ggab_genericassistant.scan=Buscar controles novamente
+gui.ggab_genericassistant.done=Concluir
+gui.ggab_genericassistant.refill_hotbar=Repor hotbar
+gui.ggab_genericassistant.replace_broken_tool=Trocar ferramenta quebrada

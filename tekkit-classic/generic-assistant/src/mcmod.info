@@ -1,0 +1,12 @@
+[
+  {
+    "modid": "mod_GenericAssistant",
+    "name": "gabrielgollo_Generic Assistant",
+    "description": "Gamepad support, automatic tools, hotbar refill, and broken-tool replacement for Tekkit Classic 1.2.5.",
+    "version": "1.0.0-mc1.2.5",
+    "authors": ["Gabriel Gollo"],
+    "credits": "Created by Gabriel Gollo",
+    "logoFile": "",
+    "url": "https://github.com/gabrielgollo/tekkit-extra-mods"
+  }
+]

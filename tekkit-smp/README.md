@@ -6,7 +6,7 @@ Pack release: `1.0.0`.
 
 ## Mods
 
-- [`controller-assistant/`](controller-assistant/README.md): controller input, menu navigation, and gameplay assistance.
+- [`generic-assistant/`](generic-assistant/README.md): controller input, menu navigation, and gameplay assistance.
 - [`x-ray-deluxe/`](x-ray-deluxe/README.md): configurable ore highlighting and X-Ray rendering.
 - [`world-sync/`](world-sync/README.md): synchronize single-player saves to a private S3-compatible bucket.
 
