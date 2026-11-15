@@ -263,7 +263,7 @@ public final class WorldSyncMod {
 
     private boolean isConfigured() {
         if (config != null && config.isConfigured()) return true;
-        status = "Set bucket and MinIO credentials in config/gabrielgollo-world-sync.properties";
+        status = "Set endpoint, bucket, sync user ID and credentials in config/gabrielgollo-world-sync.properties";
         busy = false;
         return false;
     }

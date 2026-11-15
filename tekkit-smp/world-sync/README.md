@@ -2,17 +2,17 @@
 
 Client-side save synchronization for Tekkit SMP 1.12.2. It uploads a zipped single-player world to a private S3-compatible bucket after the integrated server stops. Remote saves are checked automatically in the background when the title screen first opens. Local worlds absent from the bucket are uploaded during the same pass.
 
-The mod uses the AWS SDK for Java 2.x with path-style S3 requests, so it can connect to MinIO. It does not bundle access keys. Click **World Sync** on the title screen to edit the endpoint, bucket, region, access key, secret key, and sync user ID. The settings are saved to `config/gabrielgollo-world-sync.properties` on that computer and must not be committed. The default object prefix is `tekkit-smp/1.12.2/<Minecraft username>/`; set the sync user ID to the same stable value on both computers.
+The mod uses the AWS SDK for Java 2.x with path-style S3 requests, so it can connect to MinIO. It does not bundle access keys. Click **World Sync** on the title screen to edit the endpoint, bucket, region, access key, secret key, and sync user ID. The settings are saved to `config/gabrielgollo-world-sync.properties` on that computer and must not be committed. The default object prefix is `tekkit-smp/1.12.2/<sync-user-id>/`; set the sync user ID to the same stable value on both computers.
 
 Example local configuration:
 
 ```properties
-endpoint=http://192.168.31.16:9006
-bucket=minecraft
+endpoint=https://s3.example.com
+bucket=your-bucket
 region=us-east-1
 accessKey=
 secretKey=
-userId=GabrielGollo
+userId=your-sync-id
 ```
 
 Use the **World Sync** button on the title screen to check the cloud and restore missing or older local worlds. If the local world is newer, the screen asks whether to upload the local copy or replace it with the cloud copy. Replaced local folders are retained as `*.world-sync-backup-*` inside `saves/`.
@@ -33,3 +33,5 @@ Requires JDK 8 and the Tekkit SMP pack at `../technic/modpacks/tekkit-smp`.
 - Open settings manually to inspect status or save connection settings and retry synchronization.
 - A conflict requiring a choice can open the sync screen automatically from the title menu.
 - Keep the bucket private and grant the configured credentials access only to the world-sync objects.
+
+Endpoint, bucket, credentials, and sync user ID start empty and must be configured explicitly. The region defaults to `us-east-1`. Existing saved values are preserved. Use the same sync user ID on both computers.

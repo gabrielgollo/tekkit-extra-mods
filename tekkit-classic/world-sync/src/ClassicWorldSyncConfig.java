@@ -17,12 +17,12 @@ final class ClassicWorldSyncConfig {
 
     private ClassicWorldSyncConfig(File file, Properties properties) {
         this.file = file;
-        endpoint = properties.getProperty("endpoint", "http://192.168.31.16:9006").trim();
-        bucket = properties.getProperty("bucket", "minecraft").trim();
+        endpoint = properties.getProperty("endpoint", "").trim();
+        bucket = properties.getProperty("bucket", "").trim();
         region = properties.getProperty("region", "us-east-1").trim();
         accessKey = properties.getProperty("accessKey", "").trim();
         secretKey = properties.getProperty("secretKey", "").trim();
-        userId = properties.getProperty("userId", "GabrielGollo").trim();
+        userId = properties.getProperty("userId", "").trim();
     }
 
     static ClassicWorldSyncConfig load() throws Exception {
@@ -66,7 +66,7 @@ final class ClassicWorldSyncConfig {
 
     boolean isConfigured() {
         return !endpoint.isEmpty() && !bucket.isEmpty() && !region.isEmpty()
-                && !accessKey.isEmpty() && !secretKey.isEmpty();
+                && !accessKey.isEmpty() && !secretKey.isEmpty() && !userId.isEmpty();
     }
 
     private static void restrictPermissions(File file) throws Exception {

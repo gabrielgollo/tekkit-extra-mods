@@ -11,12 +11,12 @@ final class ClassicWorldSyncGui extends vp {
         this.mod = mod;
         this.startup = startup;
         ClassicWorldSyncConfig config = mod.config();
-        values[0] = config == null ? "http://192.168.31.16:9006" : config.endpoint;
-        values[1] = config == null ? "minecraft" : config.bucket;
+        values[0] = config == null ? "" : config.endpoint;
+        values[1] = config == null ? "" : config.bucket;
         values[2] = config == null ? "us-east-1" : config.region;
         values[3] = config == null ? "" : config.accessKey;
         values[4] = "";
-        values[5] = config == null ? "GabrielGollo" : config.userId;
+        values[5] = config == null ? "" : config.userId;
     }
 
     @SuppressWarnings("unchecked")

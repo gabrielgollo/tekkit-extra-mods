@@ -18,3 +18,5 @@ Requires Java 8 and the Tekkit Classic client files at `../technic/modpacks/tekk
 ```
 
 The installed JAR is `gabrielgollo_world-sync-<version>-mc1.2.5.jar`.
+
+Endpoint, bucket, credentials, and sync user ID start empty and must be configured explicitly. The region defaults to `us-east-1`. Existing saved values are preserved. Use the same sync user ID on both computers.

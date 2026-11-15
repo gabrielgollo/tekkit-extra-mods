@@ -224,13 +224,13 @@ public final class mod_WorldSync extends BaseMod {
 
     private boolean configured() {
         if (config != null && config.isConfigured()) return true;
-        status = "Set bucket and MinIO credentials in config/gabrielgollo-world-sync-classic.properties";
+        status = "Set endpoint, bucket, sync user ID and credentials in config/gabrielgollo-world-sync-classic.properties";
         busy = false;
         return false;
     }
 
     private ClassicS3WorldStore store() throws Exception {
-        String username = config == null || config.userId.isEmpty() ? "player" : config.userId;
+        String username = config.userId;
         return new ClassicS3WorldStore(config, username);
     }
 

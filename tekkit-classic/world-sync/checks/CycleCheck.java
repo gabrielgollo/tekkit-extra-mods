@@ -32,6 +32,7 @@ public class CycleCheck {
    set(cpw.mods.fml.client.FMLClientHandler.instance(),cpw.mods.fml.client.FMLClientHandler.class,"client",mc);
    mod_WorldSync mod=new mod_WorldSync();
    ClassicWorldSyncConfig config=ClassicWorldSyncConfig.load();
+   require(config.endpoint.isEmpty() && config.bucket.isEmpty() && config.userId.isEmpty() && !config.isConfigured(), "Personal defaults must be absent");
    config.update("http://127.0.0.1:"+server.getAddress().getPort(),"test","us-east-1","test","test","CycleCheck");
    set(mod,mod_WorldSync.class,"config",config);
    set(mod,mod_WorldSync.class,"startupScreenShown",true);

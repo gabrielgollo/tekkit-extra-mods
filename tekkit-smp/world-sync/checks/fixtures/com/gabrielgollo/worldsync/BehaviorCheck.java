@@ -10,6 +10,7 @@ public class BehaviorCheck {
  public static void main(String[] args)throws Exception{
   Minecraft mc=Minecraft.INSTANCE;mc.mcDataDir=Files.createTempDirectory("smp-sync-check-").toFile();mc.currentScreen=new GuiMainMenu();
   WorldSyncConfig config=WorldSyncConfig.load(new File(mc.mcDataDir,"config"));require(new File(mc.mcDataDir,"config/gabrielgollo-world-sync.properties").isFile(),"First config not created");
+  require(config.endpoint.isEmpty()&&config.bucket.isEmpty()&&config.userId.isEmpty()&&!config.isConfigured(),"Personal defaults must be absent");
   config.update("http://localhost","test","us-east-1","test","test","Check");config.save();
   Path level=mc.mcDataDir.toPath().resolve("saves/Local/level.dat");Files.createDirectories(level.getParent());Files.write(level,"first".getBytes("UTF-8"));
   Path backup=mc.mcDataDir.toPath().resolve("saves/Local.world-sync-backup-1/level.dat");Files.createDirectories(backup.getParent());Files.write(backup,new byte[]{1});

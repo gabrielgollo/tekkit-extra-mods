@@ -19,8 +19,8 @@ final class WorldSyncConfig {
 
     private WorldSyncConfig(File file, Properties properties) {
         this.file = file;
-        endpoint = properties.getProperty("endpoint", "http://192.168.31.16:9006").trim();
-        bucket = properties.getProperty("bucket", "minecraft").trim();
+        endpoint = properties.getProperty("endpoint", "").trim();
+        bucket = properties.getProperty("bucket", "").trim();
         region = properties.getProperty("region", "us-east-1").trim();
         accessKey = properties.getProperty("accessKey", "").trim();
         secretKey = properties.getProperty("secretKey", "").trim();
@@ -40,8 +40,8 @@ final class WorldSyncConfig {
         }
         boolean created = !file.isFile();
         if (created) {
-            properties.setProperty("endpoint", "http://192.168.31.16:9006");
-            properties.setProperty("bucket", "minecraft");
+            properties.setProperty("endpoint", "");
+            properties.setProperty("bucket", "");
             properties.setProperty("region", "us-east-1");
             properties.setProperty("accessKey", "");
             properties.setProperty("secretKey", "");
@@ -89,6 +89,6 @@ final class WorldSyncConfig {
 
     boolean isConfigured() {
         return !endpoint.isEmpty() && !bucket.isEmpty() && !region.isEmpty()
-                && !accessKey.isEmpty() && !secretKey.isEmpty();
+                && !accessKey.isEmpty() && !secretKey.isEmpty() && !userId.isEmpty();
     }
 }
