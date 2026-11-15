@@ -1,0 +1,14 @@
+gui.ggab_worldsync.title=gabrielgollo_World Sync
+gui.ggab_worldsync.working=Verificando o armazenamento privado...
+gui.ggab_worldsync.continue=Continuar
+gui.ggab_worldsync.conflict=O mundo local e mais recente que a copia na nuvem:
+gui.ggab_worldsync.upload=Usar mundo local
+gui.ggab_worldsync.download=Substituir pelo mundo da nuvem
+gui.ggab_worldsync.error=Falha na sincronizacao. Verifique o log e a configuracao.
+gui.ggab_worldsync.endpoint=Endereco do bucket
+gui.ggab_worldsync.bucket=Nome do bucket
+gui.ggab_worldsync.region=Regiao
+gui.ggab_worldsync.access_key=Access key ID
+gui.ggab_worldsync.secret_key=Secret access key (vazio mantem a chave salva)
+gui.ggab_worldsync.user_id=ID de sincronizacao
+gui.ggab_worldsync.save_sync=Salvar e sincronizar

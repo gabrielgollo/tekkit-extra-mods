@@ -1,0 +1,2 @@
+package net.minecraftforge.fml.common.event;
+public class FMLPreInitializationEvent{public java.io.File getModConfigurationDirectory(){return new java.io.File(net.minecraft.client.Minecraft.INSTANCE.mcDataDir,"config");}}

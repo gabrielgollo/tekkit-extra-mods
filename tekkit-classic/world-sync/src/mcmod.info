@@ -1,0 +1,10 @@
+[
+  {
+    "modid": "mod_WorldSync",
+    "name": "gabrielgollo_World Sync Classic",
+    "description": "Synchronize single-player saves with a private S3-compatible bucket.",
+    "credits": "Created by Gabriel Gollo",
+    "version": "1.0.0-mc1.2.5",
+    "authors": ["Gabriel Gollo"]
+  }
+]

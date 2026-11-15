@@ -1,6 +1,7 @@
 package com.gabrielgollo.controllerassistant.client;
 
 import java.io.IOException;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
@@ -22,13 +23,13 @@ final class AssistantSettingsScreen extends GuiScreen {
         buttonList.add(new GuiButtonExt(0, panelLeft + 10, panelTop + 35, 280, 24, optionText(0)));
         buttonList.add(new GuiButtonExt(1, panelLeft + 10, panelTop + 65, 280, 24, optionText(1)));
         buttonList.add(new GuiButtonExt(2, panelLeft + 10, panelTop + 95, 280, 24, optionText(2)));
-        buttonList.add(new GuiButtonExt(3, panelLeft + 10, panelTop + 163, 280, 22, net.minecraft.client.resources.I18n.format("gui.ggab_controllerassistant.scan")));
-        buttonList.add(new GuiButtonExt(4, panelLeft + 10, panelTop + 190, 280, 20, net.minecraft.client.resources.I18n.format("gui.ggab_controllerassistant.done")));
+        buttonList.add(new GuiButtonExt(3, panelLeft + 10, panelTop + 163, 280, 22, text("scan")));
+        buttonList.add(new GuiButtonExt(4, panelLeft + 10, panelTop + 190, 280, 20, text("done")));
     }
 
     private String optionText(int option) {
-        String[] names = {"gui.ggab_controllerassistant.auto_tool", "gui.ggab_controllerassistant.auto_jump", "gui.ggab_controllerassistant.auto_treetap"};
-        return net.minecraft.client.resources.I18n.format(names[option]) + ": " + (proxy.option(option) ? "ON" : "OFF");
+        String[] names = {"auto_tool", "auto_jump", "auto_treetap"};
+        return text(names[option]) + ": " + (proxy.option(option) ? text("on") : text("off"));
     }
 
     @Override
@@ -53,10 +54,42 @@ final class AssistantSettingsScreen extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         drawRect(panelLeft, panelTop, panelLeft + 300, panelTop + 220, 0xEE202530);
-        drawString(fontRenderer, net.minecraft.client.resources.I18n.format("gui.ggab_controllerassistant.title"), panelLeft + 10, panelTop + 10, 0xFFFFFF);
-        drawString(fontRenderer, net.minecraft.client.resources.I18n.format("gui.ggab_controllerassistant.controller") + ": " + proxy.controllerStatus(), panelLeft + 10, panelTop + 132, 0xFFFF70);
-        drawString(fontRenderer, net.minecraft.client.resources.I18n.format("gui.ggab_controllerassistant.axes") + ": " + proxy.axesStatus(), panelLeft + 10, panelTop + 147, 0xBCC7D4);
+        drawString(fontRenderer, text("title"), panelLeft + 10, panelTop + 10, 0xFFFFFF);
+        drawString(fontRenderer, text("controller") + ": " + proxy.controllerStatus(), panelLeft + 10, panelTop + 132, 0xFFFF70);
+        drawString(fontRenderer, text("axes") + ": " + proxy.axesStatus(), panelLeft + 10, panelTop + 147, 0xBCC7D4);
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    static String text(String key) {
+        boolean portuguese = "pt_br".equalsIgnoreCase(Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode());
+        if (portuguese) {
+            switch (key) {
+                case "title": return "gabrielgollo_Controller Assistant";
+                case "auto_tool": return "Ferramenta automatica";
+                case "auto_jump": return "Pulo automatico";
+                case "auto_treetap": return "Treetap automatico";
+                case "controller": return "Controle";
+                case "axes": return "Eixos";
+                case "scan": return "Buscar controles novamente";
+                case "done": return "Concluir";
+                case "on": return "LIGADO";
+                case "off": return "DESLIGADO";
+                default: return key;
+            }
+        }
+        switch (key) {
+            case "title": return "gabrielgollo_Controller Assistant";
+            case "auto_tool": return "Automatic tool";
+            case "auto_jump": return "Automatic jump";
+            case "auto_treetap": return "Automatic treetap";
+            case "controller": return "Controller";
+            case "axes": return "Axes";
+            case "scan": return "Scan controllers again";
+            case "done": return "Done";
+            case "on": return "ON";
+            case "off": return "OFF";
+            default: return key;
+        }
     }
 
     @Override

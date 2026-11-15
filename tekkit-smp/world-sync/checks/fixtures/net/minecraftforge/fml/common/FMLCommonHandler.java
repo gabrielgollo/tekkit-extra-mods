@@ -1,0 +1,2 @@
+package net.minecraftforge.fml.common;
+public class FMLCommonHandler {private static final FMLCommonHandler INSTANCE=new FMLCommonHandler(); public static FMLCommonHandler instance(){return INSTANCE;}public net.minecraft.server.MinecraftServer getMinecraftServerInstance(){return new net.minecraft.server.MinecraftServer();}}

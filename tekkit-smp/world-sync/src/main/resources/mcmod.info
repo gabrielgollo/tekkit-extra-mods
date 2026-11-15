@@ -1,0 +1,11 @@
+[
+  {
+    "modid": "gabrielgollo_worldsync",
+    "name": "gabrielgollo_World Sync",
+    "description": "Sync single-player saves to a private S3-compatible bucket.",
+    "version": "${version}",
+    "mcversion": "1.12.2",
+    "authors": ["Gabriel Gollo"],
+    "url": "https://github.com/gabrielgollo/tekkit-extra-mods"
+  }
+]

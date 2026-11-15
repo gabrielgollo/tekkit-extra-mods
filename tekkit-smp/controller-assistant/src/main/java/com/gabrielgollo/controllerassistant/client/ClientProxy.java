@@ -212,7 +212,7 @@ public final class ClientProxy extends CommonProxy {
     @net.minecraftforge.fml.common.eventhandler.SubscribeEvent
     public void addTitleButton(GuiScreenEvent.InitGuiEvent.Post event) {
         if (event.getGui() instanceof GuiMainMenu) {
-            event.getButtonList().add(new net.minecraft.client.gui.GuiButton(TITLE_BUTTON_ID, 8, event.getGui().height - 28, 150, 20, net.minecraft.client.resources.I18n.format("gui.ggab_controllerassistant.title")));
+            event.getButtonList().add(new net.minecraft.client.gui.GuiButton(TITLE_BUTTON_ID, 8, event.getGui().height - 28, 150, 20, AssistantSettingsScreen.text("title")));
         }
     }
 

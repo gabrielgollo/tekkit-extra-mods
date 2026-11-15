@@ -1,0 +1,2 @@
+package net.minecraftforge.fml.common;
+public @interface Mod {String modid();String name();String version();boolean clientSideOnly();String acceptedMinecraftVersions();String guiFactory();public @interface EventHandler{}}

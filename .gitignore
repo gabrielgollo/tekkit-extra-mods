@@ -4,3 +4,5 @@
 .DS_Store
 **/.gradle/
 **/run/
+**/gabrielgollo-world-sync.properties
+**/gabrielgollo-world-sync-classic.properties

@@ -1,0 +1,2 @@
+package net.minecraft.client;
+public class Minecraft {public static final Minecraft INSTANCE=new Minecraft(); public java.io.File mcDataDir; public Object world;public net.minecraft.client.gui.GuiScreen currentScreen;public int screenChanges;public static Minecraft getMinecraft(){return INSTANCE;} public void displayGuiScreen(net.minecraft.client.gui.GuiScreen s){currentScreen=s;screenChanges++;} public Session getSession(){return new Session();}public static class Session{public String getUsername(){return "Check";}}}
