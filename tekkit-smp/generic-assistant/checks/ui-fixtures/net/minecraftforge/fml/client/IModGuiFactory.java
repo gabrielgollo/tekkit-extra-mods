@@ -1,0 +1,2 @@
+package net.minecraftforge.fml.client;
+public interface IModGuiFactory {void initialize(net.minecraft.client.Minecraft mc);boolean hasConfigGui();net.minecraft.client.gui.GuiScreen createConfigGui(net.minecraft.client.gui.GuiScreen parent);java.util.Set<RuntimeOptionCategoryElement> runtimeGuiCategories();class RuntimeOptionCategoryElement{}}

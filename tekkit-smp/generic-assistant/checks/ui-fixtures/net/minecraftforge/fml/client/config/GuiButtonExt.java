@@ -1,0 +1,2 @@
+package net.minecraftforge.fml.client.config;
+public class GuiButtonExt extends net.minecraft.client.gui.GuiButton {public GuiButtonExt(int id,int x,int y,int w,int h,String label){super(id,x,y,w,h,label);}}

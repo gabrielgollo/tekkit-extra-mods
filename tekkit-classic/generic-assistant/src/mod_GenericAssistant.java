@@ -62,6 +62,10 @@ public final class mod_GenericAssistant extends BaseMod {
     }
     void releaseJump(Minecraft mc){if(jumping && mc!=null && mc.A!=null){afu.a(mc.A.r.d,false);jumping=false;}}
     void saveSettings(){
+        settings.setProperty("lookSpeed",String.valueOf(pad.lookSpeed));
+        settings.setProperty("deadzone",String.valueOf(pad.deadzone));
+        settings.setProperty("cursorSpeed",String.valueOf(pad.cursorSpeed));
+        settings.setProperty("invertLookY",String.valueOf(pad.invertLookY));
         settings.setProperty("refillHotbar",String.valueOf(refillHotbar));
         settings.setProperty("replaceBrokenTool",String.valueOf(replaceBrokenTool));
         settings.setProperty("autoTool",String.valueOf(autoTool));settings.setProperty("autoJump",String.valueOf(autoJump));settings.setProperty("autoTreetap",String.valueOf(autoTreetap));

@@ -1,0 +1,2 @@
+package net.minecraft.client.gui;
+public class GuiButton {public int id,x,y,width,height;public String displayString;public GuiButton(int id,int x,int y,int w,int h,String label){this.id=id;this.x=x;this.y=y;this.width=w;this.height=h;displayString=label;}}

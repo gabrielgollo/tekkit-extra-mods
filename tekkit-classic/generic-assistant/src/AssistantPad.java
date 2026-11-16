@@ -18,7 +18,8 @@ final class AssistantPad {
     float deadzone=.2f;
     boolean using;
     String moveX="x",moveY="y",lookX="rx",lookY="ry",triggerAxis="z";
-    float lookSpeed=5f;
+    float lookSpeed=5f, cursorSpeed=14f;
+    boolean invertLookY;
     String triggerMode="combined",attackAxis="rz",useAxis="z";
     boolean menuWasOpen;
     boolean menuArmed;
@@ -40,7 +41,9 @@ final class AssistantPad {
         attackAxis=setting(p,"axis.attack","rz");useAxis=setting(p,"axis.use","z");
         try{triggerRest=Float.parseFloat(setting(p,"triggerRest","-1"));if(triggerRest!=-1f && triggerRest!=0f)triggerRest=-1f;}catch(NumberFormatException ignored){}
 
-        try{deadzone=Math.max(.05f,Math.min(.8f,Float.parseFloat(setting(p,"deadzone","0.20"))));lookSpeed=Math.max(.1f,Math.min(20f,Float.parseFloat(setting(p,"lookSpeed","5"))));}catch(NumberFormatException ignored){}
+        try{deadzone=Math.max(.05f,Math.min(.8f,Float.parseFloat(setting(p,"deadzone","0.20"))));lookSpeed=Math.max(.1f,Math.min(30f,Float.parseFloat(setting(p,"lookSpeed","5"))));}catch(NumberFormatException ignored){}
+        try{cursorSpeed=Math.max(1f,Math.min(40f,Float.parseFloat(setting(p,"cursorSpeed","14"))));}catch(NumberFormatException ignored){}
+        invertLookY=Boolean.parseBoolean(setting(p,"invertLookY","false"));
     }
     private String setting(Properties p,String key,String fallback){String v=p.getProperty(key,fallback);p.setProperty(key,v);return v;}
     private int mappedButton(int logical){return buttonMap[logical];}
@@ -54,7 +57,7 @@ final class AssistantPad {
         try{
             if(robot==null)robot=new java.awt.Robot();
             java.awt.Point point=java.awt.MouseInfo.getPointerInfo().getLocation();
-            robot.mouseMove(point.x+Math.round(axis(moveX)*14),point.y+Math.round(axis(moveY)*14));
+            robot.mouseMove(point.x+Math.round(axis(moveX)*cursorSpeed),point.y+Math.round(axis(moveY)*cursorSpeed));
             boolean left=button(0),right=button(2);
             if(left!=menuClick){if(left)robot.mousePress(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);menuClick=left;}
             if(right!=menuRight){if(right)robot.mousePress(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);menuRight=right;}
@@ -115,7 +118,7 @@ final class AssistantPad {
         if(Math.abs(lookHorizontal)>.03f || Math.abs(lookVertical)>.03f)controllerLook=true;
         if(controllerLook && !mouseLook){
             mc.h.u+=lookHorizontal*lookSpeed;
-            mc.h.v=Math.max(-90,Math.min(90,mc.h.v+lookVertical*lookSpeed));
+            mc.h.v=Math.max(-90,Math.min(90,mc.h.v+lookVertical*lookSpeed*(invertLookY?-1f:1f)));
         }
         expectedYaw=mc.h.u;expectedPitch=mc.h.v;haveExpectedRotation=true;
         float trigger=axis(triggerAxis);boolean split="split".equalsIgnoreCase(triggerMode);

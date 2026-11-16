@@ -1,0 +1,2 @@
+package net.minecraft.client;
+public class Minecraft {private static final Minecraft INSTANCE=new Minecraft();public net.minecraft.client.gui.GuiScreen currentScreen;public static Minecraft getMinecraft(){return INSTANCE;}public void displayGuiScreen(net.minecraft.client.gui.GuiScreen screen){currentScreen=screen;}public LanguageManager getLanguageManager(){return new LanguageManager();}public static class LanguageManager{public Language getCurrentLanguage(){return new Language();}}public static class Language{public String getLanguageCode(){return "en_us";}}}

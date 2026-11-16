@@ -68,6 +68,8 @@ public final class ClientProxy extends CommonProxy {
     private boolean titleMouseDown;
     private float deadzone = .2f;
     private float lookSpeed = 5f;
+    private float cursorSpeed = 14f;
+    private boolean invertLookY;
     private String moveX = "x";
     private String moveY = "y";
     private String lookX = "rx";
@@ -106,7 +108,9 @@ public final class ClientProxy extends CommonProxy {
             autoTool = Boolean.parseBoolean(config.getProperty("autoTool", "true"));
             autoTreetap = Boolean.parseBoolean(config.getProperty("autoTreetap", "true"));
             deadzone = clamp(parseFloat("deadzone", .2f), .05f, .8f);
-            lookSpeed = clamp(parseFloat("lookSpeed", 5f), .1f, 20f);
+            lookSpeed = clamp(parseFloat("lookSpeed", 5f), .1f, 30f);
+            cursorSpeed = clamp(parseFloat("cursorSpeed", 14f), 1f, 40f);
+            invertLookY = Boolean.parseBoolean(config.getProperty("invertLookY", "false"));
             moveX = value("axis.moveX", "x");
             moveY = value("axis.moveY", "y");
             lookX = value("axis.lookX", "rx");
@@ -143,6 +147,10 @@ public final class ClientProxy extends CommonProxy {
     }
 
     private void saveConfig(File file) throws Exception {
+        config.setProperty("lookSpeed", String.valueOf(lookSpeed));
+        config.setProperty("deadzone", String.valueOf(deadzone));
+        config.setProperty("cursorSpeed", String.valueOf(cursorSpeed));
+        config.setProperty("invertLookY", String.valueOf(invertLookY));
         config.setProperty("refillHotbar", String.valueOf(refillHotbar));
         config.setProperty("replaceBrokenTool", String.valueOf(replaceBrokenTool));
         config.setProperty("autoTool", String.valueOf(autoTool));
@@ -255,7 +263,7 @@ public final class ClientProxy extends CommonProxy {
         try {
             if (robot == null) robot = new Robot();
             Point point = MouseInfo.getPointerInfo().getLocation();
-            robot.mouseMove(point.x + Math.round(axis(moveX) * 14f), point.y + Math.round(axis(moveY) * 14f));
+            robot.mouseMove(point.x + Math.round(axis(moveX) * cursorSpeed), point.y + Math.round(axis(moveY) * cursorSpeed));
             if (a != menuLeft) {
                 if (a) robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); else robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
                 menuLeft = a;
@@ -289,7 +297,7 @@ public final class ClientProxy extends CommonProxy {
         if (Math.abs(horizontalLook) > .03f || Math.abs(verticalLook) > .03f) controllerLook = true;
         if (controllerLook && !mouseLook) {
             player.rotationYaw += horizontalLook * lookSpeed;
-            player.rotationPitch = Math.max(-90f, Math.min(90f, player.rotationPitch + verticalLook * lookSpeed));
+            player.rotationPitch = Math.max(-90f, Math.min(90f, player.rotationPitch + verticalLook * lookSpeed * (invertLookY ? -1f : 1f)));
         }
         expectedYaw = player.rotationYaw;
         expectedPitch = player.rotationPitch;
@@ -401,7 +409,29 @@ public final class ClientProxy extends CommonProxy {
     private void openSettings(Minecraft mc) {
         releaseGameplayKeys();
         releaseMenuButtons();
-        mc.displayGuiScreen(new AssistantSettingsScreen(this));
+        mc.displayGuiScreen(new AssistantSettingsScreen(this, mc.currentScreen));
+    }
+
+    public static ClientProxy instance() { return instance; }
+
+    float cameraSetting(int setting) {
+        if (setting == 0) return lookSpeed;
+        if (setting == 1) return deadzone;
+        return cursorSpeed;
+    }
+
+    void adjustCameraSetting(int setting, int direction) {
+        if (setting == 0) lookSpeed = clamp(lookSpeed + direction * .5f, .1f, 30f);
+        else if (setting == 1) deadzone = clamp(deadzone + direction * .05f, .05f, .8f);
+        else cursorSpeed = clamp(cursorSpeed + direction, 1f, 40f);
+        saveConfig();
+    }
+
+    boolean invertedCamera() { return invertLookY; }
+
+    void toggleCameraInversion() {
+        invertLookY = !invertLookY;
+        saveConfig();
     }
 
     void toggleOption(int option) {

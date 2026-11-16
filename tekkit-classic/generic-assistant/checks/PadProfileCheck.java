@@ -30,6 +30,13 @@ public class PadProfileCheck {
     return null;
    }
   });
+  AssistantPad tuning=new AssistantPad();Properties tuningConfig=new Properties();
+  tuningConfig.setProperty("lookSpeed","12");tuningConfig.setProperty("deadzone","0.35");tuningConfig.setProperty("cursorSpeed","22");tuningConfig.setProperty("invertLookY","true");
+  tuning.configure(tuningConfig);
+  if(tuning.lookSpeed!=12f||tuning.deadzone!=.35f||tuning.cursorSpeed!=22f||!tuning.invertLookY)throw new AssertionError("camera tuning load");
+  tuningConfig.setProperty("lookSpeed","99");tuningConfig.setProperty("cursorSpeed","99");tuningConfig.setProperty("deadzone","0");tuning.configure(tuningConfig);
+  if(tuning.lookSpeed!=30f||tuning.cursorSpeed!=40f||tuning.deadzone!=.05f)throw new AssertionError("camera tuning bounds");
+  System.out.println("PASS: camera sensitivity, deadzone, cursor speed, inversion and bounds");
   AssistantPad pad=new AssistantPad();
   Field controller=AssistantPad.class.getDeclaredField("controller");controller.setAccessible(true);controller.set(pad,fake);
   Properties config=new Properties();config.setProperty("button.0","5");config.setProperty("axis.lookX","x");config.setProperty("triggerMode","split");
