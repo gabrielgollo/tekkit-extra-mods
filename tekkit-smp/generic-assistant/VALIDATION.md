@@ -13,3 +13,7 @@ Live visual verification and inventory synchronization on a multiplayer server r
 Java 8 builds passed for both targets. Classic profile checks verify loading sensitivity, deadzone, cursor speed, inversion, and bounds. The isolated SMP screen check verifies the Forge configuration factory, routing all six adjustment buttons, inversion and reconnect actions, assistance-page navigation, Done/Escape parent navigation, and button bounds at 320×240. Screen tests use fixtures and do not validate OpenGL or physical handheld input. Live feel on the Z1E remains unverified.
 
 The controller-page regression test dispatches a click by iterating the current button list, matching the vanilla GUI dispatch behavior. It fails against the previous screen with `Missing button 10` and passes with deferred page rebuilding in `updateScreen`. Inversion updates its label without replacing the active button list.
+
+## Right-stick menu scrolling
+
+The standalone MenuScroll check passes on both targets: neutral/drift suppression, immediate up/down response, timed repetition independent of callback frequency, immediate reversal, release/reset, faster full-tilt repetition, and invalid-input rejection. Both menu handlers pass the configured vertical look axis to this helper and emit Robot mouse-wheel events only while navigating menus. Physical handheld scrolling remains unverified.

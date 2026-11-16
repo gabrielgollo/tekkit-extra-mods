@@ -15,6 +15,7 @@ final class AssistantPad {
     private long retry;
     private final Set<Integer> held=new HashSet<Integer>();
     private final boolean[] previous=new boolean[16];
+    private final MenuScroll menuScroll=new MenuScroll();
     float deadzone=.2f;
     boolean using;
     String moveX="x",moveY="y",lookX="rx",lookY="ry",triggerAxis="z";
@@ -50,6 +51,7 @@ final class AssistantPad {
     private int[] buttonMap={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
     void configureButtons(Properties p){for(int i=0;i<10;i++){try{buttonMap[i]=Integer.parseInt(setting(p,"button."+i,String.valueOf(i)));}catch(NumberFormatException ignored){}}}
     private void releaseMenu(){
+        menuScroll.reset();
         if(robot!=null){if(menuClick)robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);if(menuRight)robot.mouseRelease(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);}
         menuClick=false;menuRight=false;
     }
@@ -62,6 +64,8 @@ final class AssistantPad {
             if(left!=menuClick){if(left)robot.mousePress(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);menuClick=left;}
             if(right!=menuRight){if(right)robot.mousePress(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);menuRight=right;}
             if(button(1)&&!previous[1]){robot.keyPress(java.awt.event.KeyEvent.VK_ESCAPE);robot.keyRelease(java.awt.event.KeyEvent.VK_ESCAPE);}
+            int scroll=menuScroll.poll(axis(lookY),System.nanoTime()/1000000L);
+            if(scroll!=0)robot.mouseWheel(scroll);
             if(button(4)&&!previous[4])robot.mouseWheel(-1);
             if(button(5)&&!previous[5])robot.mouseWheel(1);
         }catch(Exception ex){ModLoader.getLogger().warning("Generic Assistant menu: "+ex.getMessage());}

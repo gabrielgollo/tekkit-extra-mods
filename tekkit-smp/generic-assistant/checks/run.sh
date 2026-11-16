@@ -11,3 +11,6 @@ mkdir -p "$UI_OUTPUT"
 mapfile -t UI_FIXTURES < <(find "$PROJECT/checks/ui-fixtures" -name '*.java')
 javac -source 8 -target 8 -d "$UI_OUTPUT" "${UI_FIXTURES[@]}" "$PROJECT/checks/CameraScreenCheck.java" "$PROJECT/src/main/java/com/gabrielgollo/genericassistant/client/AssistantSettingsScreen.java" "$PROJECT/src/main/java/com/gabrielgollo/genericassistant/client/AssistantGuiFactory.java"
 java -cp "$UI_OUTPUT" com.gabrielgollo.genericassistant.client.CameraScreenCheck
+
+javac -source 8 -target 8 -d "$OUTPUT" "$PROJECT/checks/MenuScrollCheck.java" "$PROJECT/src/main/java/com/gabrielgollo/genericassistant/client/MenuScroll.java"
+java -cp "$OUTPUT" com.gabrielgollo.genericassistant.client.MenuScrollCheck

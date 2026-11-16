@@ -43,3 +43,5 @@ Opening an inventory, switching worlds or players, changing the selected slot, o
 Open **Controller settings** in the assistant screen to adjust camera sensitivity (`lookSpeed`, 0.1–30), stick deadzone (`deadzone`, 5–80%), menu cursor speed (`cursorSpeed`, 1–40), and vertical camera inversion (`invertLookY`). Changes apply immediately and are saved automatically. The camera retains its default sensitivity of 5; try 10 for a faster turn rate. Existing profile values are preserved.
 
 The legacy mod list has no Forge configuration factory API; use the title-screen Generic Assistant button or F8 to open these settings.
+
+In menus, the right stick scrolls vertically while the left stick moves the pointer. Push farther to scroll faster; centering the stick stops scrolling. LB/RB scrolling remains available. Scrolling follows the configured `axis.lookY` and is independent of camera inversion.

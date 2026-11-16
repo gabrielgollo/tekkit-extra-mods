@@ -57,6 +57,7 @@ public final class ClientProxy extends CommonProxy {
     private boolean replaceBrokenTool = true;
     private final HotbarAssistant hotbar = new HotbarAssistant();
     private boolean autoTreetap = true;
+    private final MenuScroll menuScroll = new MenuScroll();
     private boolean menuWasOpen;
     private boolean menuArmed;
     private boolean menuLeft;
@@ -257,6 +258,7 @@ public final class ClientProxy extends CommonProxy {
         boolean a = button(0), b = button(1), x = button(2);
         if (!a && !b && !x) menuArmed = true;
         if (!menuArmed) {
+            menuScroll.reset();
             updatePreviousButtons();
             return;
         }
@@ -273,6 +275,8 @@ public final class ClientProxy extends CommonProxy {
                 menuRight = x;
             }
             if (b && !previousButtons[1]) tapEscape();
+            int scroll = menuScroll.poll(axis(lookY), System.nanoTime() / 1000000L);
+            if (scroll != 0) robot.mouseWheel(scroll);
             if (button(4) && !previousButtons[4]) robot.mouseWheel(-1);
             if (button(5) && !previousButtons[5]) robot.mouseWheel(1);
         } catch (Exception error) {
@@ -497,6 +501,7 @@ public final class ClientProxy extends CommonProxy {
     }
 
     private void releaseMenuButtons() {
+        menuScroll.reset();
         if (robot != null) {
             if (menuLeft) robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
             if (menuRight) robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
