@@ -10,6 +10,7 @@ final class AssistantSettingsScreen extends GuiScreen {
     private final ClientProxy proxy;
     private final GuiScreen parent;
     private boolean controllerPage;
+    private boolean rebuildPending;
     private int panelLeft;
     private int panelTop;
 
@@ -41,6 +42,15 @@ final class AssistantSettingsScreen extends GuiScreen {
         buttonList.add(new GuiButtonExt(6, panelLeft + 10, panelTop + 212, 280, 20, text("done")));
     }
 
+    @Override
+    public void updateScreen() {
+        if (rebuildPending) {
+            rebuildPending = false;
+            initGui();
+        }
+        super.updateScreen();
+    }
+
     private String optionText(int option) {
         String[] names = {"auto_tool", "auto_jump", "auto_treetap", "refill_hotbar", "replace_broken_tool"};
         return text(names[option]) + ": " + (proxy.option(option) ? text("on") : text("off"));
@@ -55,10 +65,10 @@ final class AssistantSettingsScreen extends GuiScreen {
             proxy.adjustCameraSetting((button.id - 10) / 2, button.id % 2 == 0 ? -1 : 1);
         } else if (button.id == 16) {
             proxy.toggleCameraInversion();
-            initGui();
+            button.displayString = text("invert_y") + ": " + text(proxy.invertedCamera() ? "on" : "off");
         } else if (button.id == 7) {
             controllerPage = !controllerPage;
-            initGui();
+            rebuildPending = true;
         } else if (button.id == 5) {
             proxy.reconnect();
         } else if (button.id == 6) {
