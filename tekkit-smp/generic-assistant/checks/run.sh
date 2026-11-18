@@ -14,3 +14,6 @@ java -cp "$UI_OUTPUT" com.gabrielgollo.genericassistant.client.CameraScreenCheck
 
 javac -source 8 -target 8 -d "$OUTPUT" "$PROJECT/checks/MenuScrollCheck.java" "$PROJECT/src/main/java/com/gabrielgollo/genericassistant/client/MenuScroll.java"
 java -cp "$OUTPUT" com.gabrielgollo.genericassistant.client.MenuScrollCheck
+
+javac -source 8 -target 8 -d "$OUTPUT" "$PROJECT/checks/FrameMotionCheck.java" "$PROJECT/src/main/java/com/gabrielgollo/genericassistant/client/FrameMotion.java"
+java -cp "$OUTPUT" com.gabrielgollo.genericassistant.client.FrameMotionCheck

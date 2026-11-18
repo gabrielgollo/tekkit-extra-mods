@@ -24,6 +24,8 @@ final class AssistantPad {
     String triggerMode="combined",attackAxis="rz",useAxis="z";
     boolean menuWasOpen;
     boolean menuArmed;
+    private final FrameMotion frameMotion=new FrameMotion();
+    private Object framePlayer,frameWorld;
     private float expectedYaw,expectedPitch;
     private boolean haveExpectedRotation;
     float triggerRest=-1f;
@@ -58,8 +60,6 @@ final class AssistantPad {
     private void menu(Minecraft mc){
         try{
             if(robot==null)robot=new java.awt.Robot();
-            java.awt.Point point=java.awt.MouseInfo.getPointerInfo().getLocation();
-            robot.mouseMove(point.x+Math.round(axis(moveX)*cursorSpeed),point.y+Math.round(axis(moveY)*cursorSpeed));
             boolean left=button(0),right=button(2);
             if(left!=menuClick){if(left)robot.mousePress(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);menuClick=left;}
             if(right!=menuRight){if(right)robot.mousePress(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);menuRight=right;}
@@ -69,6 +69,41 @@ final class AssistantPad {
             if(button(4)&&!previous[4])robot.mouseWheel(-1);
             if(button(5)&&!previous[5])robot.mouseWheel(1);
         }catch(Exception ex){ModLoader.getLogger().warning("Generic Assistant menu: "+ex.getMessage());}
+    }
+    void renderFrame(Minecraft mc){
+        if(mc==null || controller==null || !controller.poll()){
+            frameMotion.reset();haveExpectedRotation=false;return;
+        }
+        if(framePlayer!=mc.h || frameWorld!=mc.f){
+            framePlayer=mc.h;frameWorld=mc.f;frameMotion.reset();haveExpectedRotation=false;
+        }
+        float scale=frameMotion.step(System.nanoTime());
+        if(mc.s!=null){
+            haveExpectedRotation=false;controllerLook=false;
+            if(!menuArmed)return;
+            try{
+                if(robot==null)robot=new java.awt.Robot();
+                java.awt.Point point=java.awt.MouseInfo.getPointerInfo().getLocation();
+                int dx=frameMotion.pixelsX(axis(moveX)*cursorSpeed*scale);
+                int dy=frameMotion.pixelsY(axis(moveY)*cursorSpeed*scale);
+                if(dx!=0 || dy!=0)robot.mouseMove(point.x+dx,point.y+dy);
+            }catch(Exception error){ModLoader.getLogger().warning("Generic Assistant cursor: "+error);}
+            return;
+        }
+        if(!org.lwjgl.opengl.Display.isActive() || mc.h==null || mc.f==null){
+            frameMotion.reset();haveExpectedRotation=false;return;
+        }
+        boolean mouseLook=haveExpectedRotation && (Math.abs(angleDelta(mc.h.u,expectedYaw))>.01f || Math.abs(mc.h.v-expectedPitch)>.01f);
+        float horizontal=axis(lookX),vertical=axis(lookY);
+        if(mouseLook)controllerLook=false;
+        if(Math.abs(horizontal)>.03f || Math.abs(vertical)>.03f)controllerLook=true;
+        if(controllerLook && !mouseLook){
+            float yaw=horizontal*lookSpeed*scale;
+            float pitch=Math.max(-90f,Math.min(90f,mc.h.v+vertical*lookSpeed*scale*(invertLookY?-1f:1f)))-mc.h.v;
+            mc.h.u+=yaw;mc.h.w+=yaw;
+            mc.h.v+=pitch;mc.h.x+=pitch;
+        }
+        expectedYaw=mc.h.u;expectedPitch=mc.h.v;haveExpectedRotation=true;
     }
     private float axis(String name){
         for(Component c:controller.getComponents()) if(c.getIdentifier().getName().equals(name)) return filter(c.getPollData(),deadzone);
@@ -107,24 +142,9 @@ final class AssistantPad {
         if(!org.lwjgl.opengl.Display.isActive()){release();return false;}
         releaseMenu();menuWasOpen=false;
         if(mc.h==null){release();return false;}
-        // Vanilla mouse look runs outside this mod. Detect its rotation so a
-        // centered/drifting stick never competes with the mouse camera.
-        boolean mouseLook=false;
-        if(haveExpectedRotation){
-            mouseLook=Math.abs(angleDelta(mc.h.u,expectedYaw))>.01f || Math.abs(mc.h.v-expectedPitch)>.01f;
-        }
         float x=axis(moveX),y=axis(moveY);
         key(mc.A.n,y<-.25);key(mc.A.p,y>.25);key(mc.A.o,x<-.25);key(mc.A.q,x>.25);
         key(mc.A.r,button(0) || (mod_GenericAssistant.autoJump && mc.h.z && mc.h.A && y<-.25f));key(mc.A.v,button(1));
-        // JInput commonly exposes Xbox right stick as rx/ry and combined triggers as z.
-        float lookHorizontal=axis(lookX),lookVertical=axis(lookY);
-        if(mouseLook)controllerLook=false;
-        if(Math.abs(lookHorizontal)>.03f || Math.abs(lookVertical)>.03f)controllerLook=true;
-        if(controllerLook && !mouseLook){
-            mc.h.u+=lookHorizontal*lookSpeed;
-            mc.h.v=Math.max(-90,Math.min(90,mc.h.v+lookVertical*lookSpeed*(invertLookY?-1f:1f)));
-        }
-        expectedYaw=mc.h.u;expectedPitch=mc.h.v;haveExpectedRotation=true;
         float trigger=axis(triggerAxis);boolean split="split".equalsIgnoreCase(triggerMode);
         boolean attack=split ? triggerPressed(rawAxis(attackAxis),triggerRest) : trigger<-.25f;
         using=split ? triggerPressed(rawAxis(useAxis),triggerRest) : trigger>.25f;

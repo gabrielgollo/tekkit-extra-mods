@@ -63,6 +63,8 @@ public final class ClientProxy extends CommonProxy {
     private boolean menuLeft;
     private boolean menuRight;
     private boolean controllerLook;
+    private final FrameMotion frameMotion = new FrameMotion();
+    private Object framePlayer, frameWorld;
     private float expectedYaw;
     private float expectedPitch;
     private boolean haveExpectedRotation;
@@ -200,6 +202,62 @@ public final class ClientProxy extends CommonProxy {
         updateGameplay(mc);
     }
 
+    @net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        if (controller == null || !poll()) {
+            frameMotion.reset();
+            haveExpectedRotation = false;
+            return;
+        }
+        if (framePlayer != mc.player || frameWorld != mc.world) {
+            framePlayer = mc.player;
+            frameWorld = mc.world;
+            frameMotion.reset();
+            haveExpectedRotation = false;
+        }
+        float scale = frameMotion.step(System.nanoTime());
+        if (mc.currentScreen != null) {
+            haveExpectedRotation = false;
+            controllerLook = false;
+            if (!menuArmed) return;
+            try {
+                if (robot == null) robot = new Robot();
+                Point point = MouseInfo.getPointerInfo().getLocation();
+                int dx = frameMotion.pixelsX(axis(moveX) * cursorSpeed * scale);
+                int dy = frameMotion.pixelsY(axis(moveY) * cursorSpeed * scale);
+                if (dx != 0 || dy != 0) robot.mouseMove(point.x + dx, point.y + dy);
+            } catch (Exception error) {
+                System.err.println("[Generic Assistant] Cursor movement failed: " + error.getMessage());
+            }
+            return;
+        }
+        if (!Display.isActive() || mc.player == null || mc.world == null) {
+            frameMotion.reset();
+            haveExpectedRotation = false;
+            return;
+        }
+        EntityPlayer player = mc.player;
+        boolean mouseLook = haveExpectedRotation && (Math.abs(angleDelta(player.rotationYaw, expectedYaw)) > .01f
+                || Math.abs(player.rotationPitch - expectedPitch) > .01f);
+        float horizontal = axis(lookX), vertical = axis(lookY);
+        if (mouseLook) controllerLook = false;
+        if (Math.abs(horizontal) > .03f || Math.abs(vertical) > .03f) controllerLook = true;
+        if (controllerLook && !mouseLook) {
+            float yaw = horizontal * lookSpeed * scale;
+            float pitch = Math.max(-90f, Math.min(90f, player.rotationPitch
+                    + vertical * lookSpeed * scale * (invertLookY ? -1f : 1f))) - player.rotationPitch;
+            player.rotationYaw += yaw;
+            player.prevRotationYaw += yaw;
+            player.rotationPitch += pitch;
+            player.prevRotationPitch += pitch;
+        }
+        expectedYaw = player.rotationYaw;
+        expectedPitch = player.rotationPitch;
+        haveExpectedRotation = true;
+    }
+
     private void pollController() {
         if (controller != null || System.currentTimeMillis() < nextScan) return;
         nextScan = System.currentTimeMillis() + 2500L;
@@ -264,8 +322,6 @@ public final class ClientProxy extends CommonProxy {
         }
         try {
             if (robot == null) robot = new Robot();
-            Point point = MouseInfo.getPointerInfo().getLocation();
-            robot.mouseMove(point.x + Math.round(axis(moveX) * cursorSpeed), point.y + Math.round(axis(moveY) * cursorSpeed));
             if (a != menuLeft) {
                 if (a) robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); else robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
                 menuLeft = a;
@@ -294,18 +350,6 @@ public final class ClientProxy extends CommonProxy {
         setKey(mc.gameSettings.keyBindRight, moveHorizontal > .25f);
         setKey(mc.gameSettings.keyBindJump, button(0));
         setKey(mc.gameSettings.keyBindSneak, button(1));
-
-        boolean mouseLook = haveExpectedRotation && (Math.abs(angleDelta(player.rotationYaw, expectedYaw)) > .01f || Math.abs(player.rotationPitch - expectedPitch) > .01f);
-        float horizontalLook = axis(lookX), verticalLook = axis(lookY);
-        if (mouseLook) controllerLook = false;
-        if (Math.abs(horizontalLook) > .03f || Math.abs(verticalLook) > .03f) controllerLook = true;
-        if (controllerLook && !mouseLook) {
-            player.rotationYaw += horizontalLook * lookSpeed;
-            player.rotationPitch = Math.max(-90f, Math.min(90f, player.rotationPitch + verticalLook * lookSpeed * (invertLookY ? -1f : 1f)));
-        }
-        expectedYaw = player.rotationYaw;
-        expectedPitch = player.rotationPitch;
-        haveExpectedRotation = true;
 
         boolean split = "split".equalsIgnoreCase(triggerMode);
         float trigger = axis(triggerAxis);

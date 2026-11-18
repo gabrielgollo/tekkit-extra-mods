@@ -17,3 +17,9 @@ The controller-page regression test dispatches a click by iterating the current 
 ## Right-stick menu scrolling
 
 The standalone MenuScroll check passes on both targets: neutral/drift suppression, immediate up/down response, timed repetition independent of callback frequency, immediate reversal, release/reset, faster full-tilt repetition, and invalid-input rejection. Both menu handlers pass the configured vertical look axis to this helper and emit Robot mouse-wheel events only while navigating menus. Physical handheld scrolling remains unverified.
+
+## Frame-based camera and cursor movement
+
+Java 8 builds passed for Classic and SMP. FrameMotion checks passed at 20, 30, 60, 120, 144, and 240 FPS: the same sensitivity produces the same total rotation over one second, camera motion occurs every frame, and menu pointer fractions preserve total cursor travel. Tests also cover stall limiting, reset, neutral pointer residuals, and negative fractional movement. Existing inventory, menu scrolling, configuration, and input checks still pass.
+
+Classic registers a direct FML RENDER tick-start handler; SMP handles RenderTickEvent.START. Gameplay tick handlers no longer modify camera rotation or move the menu pointer. Live controller feel on the Z1E remains unverified.

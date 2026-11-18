@@ -19,3 +19,5 @@ Open **Controller settings** in the assistant screen to adjust camera sensitivit
 The same screen is available through **Mods → gabrielgollo_Generic Assistant → Config**. Done and Escape return to the parent menu.
 
 In menus, the right stick scrolls vertically while the left stick moves the pointer. Push farther to scroll faster; centering the stick stops scrolling. LB/RB scrolling remains available. Scrolling follows the configured `axis.lookY` and is independent of camera inversion.
+
+Camera rotation and menu pointer movement are updated each rendered frame using elapsed time, rather than at the 20 Hz gameplay tick rate. Sensitivity settings retain their previous scale. Rotation updates both current and previous angles to preserve smooth rendering interpolation. Fractional pointer movement is accumulated instead of rounded away at high frame rates. Long stalls and focus/world changes reset or limit movement to prevent jumps.

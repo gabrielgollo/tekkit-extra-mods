@@ -35,6 +35,7 @@ public final class mod_GenericAssistant extends BaseMod {
             p.setProperty("autoTool",String.valueOf(autoTool));p.setProperty("autoJump",String.valueOf(autoJump));
             file.getParentFile().mkdirs();FileOutputStream out=new FileOutputStream(file);p.store(out,"Generic Assistant");out.close();
         }catch(Exception ex){ModLoader.getLogger().warning("Generic Assistant config: "+ex);}
+        cpw.mods.fml.common.FMLCommonHandler.instance().registerTickHandler(new AssistantRenderTicker(pad));
         ModLoader.setInGameHook(this,true,true);
         ModLoader.setInGUIHook(this,true,true);
     }
