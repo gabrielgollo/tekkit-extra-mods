@@ -3,12 +3,14 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
 final class AssistantRenderTicker implements ITickHandler {
-    private final AssistantPad pad;
+    private final mod_GenericAssistant mod;
 
-    AssistantRenderTicker(AssistantPad pad) { this.pad = pad; }
+    AssistantRenderTicker(mod_GenericAssistant mod) { this.mod = mod; }
 
     public void tickStart(EnumSet<TickType> types, Object... data) {
-        pad.renderFrame(ModLoader.getMinecraftInstance());
+        net.minecraft.client.Minecraft mc=ModLoader.getMinecraftInstance();
+        mod.updateTitleScreen(mc);
+        mod.pad.renderFrame(mc);
     }
 
     public void tickEnd(EnumSet<TickType> types, Object... data) {

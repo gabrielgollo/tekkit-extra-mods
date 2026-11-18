@@ -10,7 +10,6 @@ public final class mod_GenericAssistant extends BaseMod {
     static mod_GenericAssistant instance;
     private Properties settings=new Properties();
     private boolean menuKey;
-    private boolean titleMouseDown;
     private int previousSlot=-1;
     final AssistantPad pad=new AssistantPad();
     public String getVersion(){return "1.0.0-mc1.2.5";}
@@ -35,31 +34,19 @@ public final class mod_GenericAssistant extends BaseMod {
             p.setProperty("autoTool",String.valueOf(autoTool));p.setProperty("autoJump",String.valueOf(autoJump));
             file.getParentFile().mkdirs();FileOutputStream out=new FileOutputStream(file);p.store(out,"Generic Assistant");out.close();
         }catch(Exception ex){ModLoader.getLogger().warning("Generic Assistant config: "+ex);}
-        cpw.mods.fml.common.FMLCommonHandler.instance().registerTickHandler(new AssistantRenderTicker(pad));
+        cpw.mods.fml.common.FMLCommonHandler.instance().registerTickHandler(new AssistantRenderTicker(this));
         ModLoader.setInGameHook(this,true,true);
         ModLoader.setInGUIHook(this,true,true);
     }
     public boolean onTickInGUI(float partial,Minecraft mc,vp gui){
-        if(gui!=null)hotbar.reset();releaseJump(mc);pad.update(mc);
-        if(gui instanceof xt){
-            drawTitleButton(gui,mc);
-            boolean down=org.lwjgl.input.Mouse.isButtonDown(0);
-            if(down&&!titleMouseDown){
-                int x=org.lwjgl.input.Mouse.getX()*gui.q/mc.d;
-                int y=gui.r-org.lwjgl.input.Mouse.getY()*gui.r/mc.e-1;
-                if(x>=8&&x<=158&&y>=gui.r-31&&y<=gui.r-8)openSettings(mc);
-            }
-            titleMouseDown=down;
-        }else titleMouseDown=false;
+        if(gui!=null){hotbar.reset();releaseJump(mc);}
         return true;
     }
-    private void drawTitleButton(vp gui,Minecraft mc){
-        int x=8,y=gui.r-31;
-        int mx=org.lwjgl.input.Mouse.getX()*gui.q/mc.d;
-        int my=gui.r-org.lwjgl.input.Mouse.getY()*gui.r/mc.e-1;
-        boolean hover=mx>=x&&mx<=x+150&&my>=y&&my<=y+23;
-        oo.a(x,y,x+150,y+23,hover?0xE0455D73:0xE02C3948);
-        gui.b(mc.q,text(mc,"Generic Assistant","Generic Assistant"),x+9,y+7,0xFFFFFF);
+    @SuppressWarnings("unchecked")
+    void updateTitleScreen(Minecraft mc){
+        if(mc==null || !(mc.s instanceof xt))return;
+        for(Object button:mc.s.s)if(button instanceof AssistantTitleButton)return;
+        mc.s.s.add(new AssistantTitleButton(this,mc.s.r-31));
     }
     void releaseJump(Minecraft mc){if(jumping && mc!=null && mc.A!=null){afu.a(mc.A.r.d,false);jumping=false;}}
     void saveSettings(){

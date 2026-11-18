@@ -22,7 +22,6 @@ final class AssistantPad {
     float lookSpeed=5f, cursorSpeed=14f;
     boolean invertLookY;
     String triggerMode="combined",attackAxis="rz",useAxis="z";
-    boolean menuWasOpen;
     boolean menuArmed;
     private final FrameMotion frameMotion=new FrameMotion();
     private Object framePlayer,frameWorld;
@@ -34,7 +33,7 @@ final class AssistantPad {
     private boolean physical(int code){return code<0 ? org.lwjgl.input.Mouse.isButtonDown(code+100) : org.lwjgl.input.Keyboard.isKeyDown(code);}
 
     java.awt.Robot robot;
-    boolean menuClick,menuRight;
+    private final MenuInput menuInput=new MenuInput();
     void configure(Properties p){
         preferredDevice=setting(p,"deviceName","");
         moveX=setting(p,"axis.moveX","x");moveY=setting(p,"axis.moveY","y");
@@ -54,24 +53,27 @@ final class AssistantPad {
     void configureButtons(Properties p){for(int i=0;i<10;i++){try{buttonMap[i]=Integer.parseInt(setting(p,"button."+i,String.valueOf(i)));}catch(NumberFormatException ignored){}}}
     private void releaseMenu(){
         menuScroll.reset();
-        if(robot!=null){if(menuClick)robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);if(menuRight)robot.mouseRelease(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);}
-        menuClick=false;menuRight=false;
+        menuInput.reset();
+        menuArmed=false;
     }
     private void menu(Minecraft mc){
-        try{
+        vp current=mc.s;
+        int x=org.lwjgl.input.Mouse.getX()*current.q/mc.d;
+        int y=current.r-org.lwjgl.input.Mouse.getY()*current.r/mc.e-1;
+        menuInput.update(mc,current,x,y,button(0),button(2),button(1));
+        menuArmed=menuInput.armed();
+        if(!menuArmed || mc.s!=current)return;
+        int scroll=menuScroll.poll(axis(lookY),System.nanoTime()/1000000L);
+        if(button(4)&&!previous[4])scroll--;
+        if(button(5)&&!previous[5])scroll++;
+        if(scroll!=0)try{
             if(robot==null)robot=new java.awt.Robot();
-            boolean left=button(0),right=button(2);
-            if(left!=menuClick){if(left)robot.mousePress(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_DOWN_MASK);menuClick=left;}
-            if(right!=menuRight){if(right)robot.mousePress(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);else robot.mouseRelease(java.awt.event.InputEvent.BUTTON3_DOWN_MASK);menuRight=right;}
-            if(button(1)&&!previous[1]){robot.keyPress(java.awt.event.KeyEvent.VK_ESCAPE);robot.keyRelease(java.awt.event.KeyEvent.VK_ESCAPE);}
-            int scroll=menuScroll.poll(axis(lookY),System.nanoTime()/1000000L);
-            if(scroll!=0)robot.mouseWheel(scroll);
-            if(button(4)&&!previous[4])robot.mouseWheel(-1);
-            if(button(5)&&!previous[5])robot.mouseWheel(1);
-        }catch(Exception ex){ModLoader.getLogger().warning("Generic Assistant menu: "+ex.getMessage());}
+            robot.mouseWheel(scroll);
+        }catch(Exception error){ModLoader.getLogger().warning("Generic Assistant scroll: "+error);}
+        for(int i=0;i<previous.length;i++)previous[i]=button(i);
     }
     void renderFrame(Minecraft mc){
-        if(mc==null || controller==null || !controller.poll()){
+        if(mc==null || !pollController()){
             frameMotion.reset();haveExpectedRotation=false;return;
         }
         if(framePlayer!=mc.h || frameWorld!=mc.f){
@@ -80,7 +82,9 @@ final class AssistantPad {
         float scale=frameMotion.step(System.nanoTime());
         if(mc.s!=null){
             haveExpectedRotation=false;controllerLook=false;
-            if(!menuArmed)return;
+            for(Integer code:held)afu.a(code,physical(code));held.clear();using=false;
+            menu(mc);
+            if(mc.s==null || !menuArmed)return;
             try{
                 if(robot==null)robot=new java.awt.Robot();
                 java.awt.Point point=java.awt.MouseInfo.getPointerInfo().getLocation();
@@ -90,6 +94,7 @@ final class AssistantPad {
             }catch(Exception error){ModLoader.getLogger().warning("Generic Assistant cursor: "+error);}
             return;
         }
+        releaseMenu();
         if(!org.lwjgl.opengl.Display.isActive() || mc.h==null || mc.f==null){
             frameMotion.reset();haveExpectedRotation=false;return;
         }
@@ -120,7 +125,7 @@ final class AssistantPad {
         else if(held.remove(code)) afu.a(code,physical(code));
     }
     void release(){releaseMenu();using=false;for(Integer code:held) afu.a(code,physical(code));held.clear();Arrays.fill(previous,false);}
-    boolean update(Minecraft mc){
+    private boolean pollController(){
         if(controller==null && System.currentTimeMillis()>retry){
             retry=System.currentTimeMillis()+3000;
             try {for(Controller candidate:ControllerEnvironment.getDefaultEnvironment().getControllers())
@@ -129,18 +134,16 @@ final class AssistantPad {
         }
         if(controller==null)return false;
         if(!controller.poll()){release();controller=null;return false;}
+        return true;
+    }
+    boolean update(Minecraft mc){
+        if(!pollController())return false;
         if(mc==null){release();return false;}
-        if(mc.s!=null){
-            for(Integer code:held)afu.a(code,physical(code));held.clear();using=false;
-            if(!menuWasOpen){menuWasOpen=true;menuArmed=false;}
-            if(!button(0)&&!button(1)&&!button(2))menuArmed=true;
-            if(menuArmed)menu(mc);
-            for(int i=0;i<previous.length;i++)previous[i]=button(i);return false;
-        }
+        if(mc.s!=null)return false;
         // Don't inject gameplay keys while the game is unfocused, but keep
         // menu navigation alive so the controller can focus/start the game.
         if(!org.lwjgl.opengl.Display.isActive()){release();return false;}
-        releaseMenu();menuWasOpen=false;
+        releaseMenu();
         if(mc.h==null){release();return false;}
         float x=axis(moveX),y=axis(moveY);
         key(mc.A.n,y<-.25);key(mc.A.p,y>.25);key(mc.A.o,x<-.25);key(mc.A.q,x>.25);

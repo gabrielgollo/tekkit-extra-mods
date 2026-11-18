@@ -35,3 +35,7 @@ The standalone MenuScroll check passes on both targets: neutral/drift suppressio
 Java 8 builds passed for Classic and SMP. FrameMotion checks passed at 20, 30, 60, 120, 144, and 240 FPS: the same sensitivity produces the same total rotation over one second, camera motion occurs every frame, and menu pointer fractions preserve total cursor travel. Tests also cover stall limiting, reset, neutral pointer residuals, and negative fractional movement. Existing inventory, menu scrolling, configuration, and input checks still pass.
 
 Classic registers a direct FML RENDER tick-start handler; SMP handles RenderTickEvent.START. Gameplay tick handlers no longer modify camera rotation or move the menu pointer. Live controller feel on the Z1E remains unverified.
+
+## Native title configuration and direct menu input
+
+The Java 8 build and Classic checks passed. MenuInputCheck uses actual legacy Minecraft GUI classes with an isolated client to verify direct A/X/B clicks, releases, held-button suppression, rearming after screen changes, the native configuration button opening AssistantGui, non-duplication, coexistence with a World Sync button, and restoration after menu recreation. Menu buttons and the injected configuration button run from the FML render callback; they no longer rely on the legacy ModLoader GUI tick callback or Robot mouse clicks. The physical Z1E confirmation click remains unverified.
