@@ -12,3 +12,7 @@ A framebuffer capture from a separate world launched with the full pack, `eviden
 Current limitation: blocks with their own atlases and liquids keep their original textures; buried ores are drawn with their real textures. RedPower and Nether Ores are still selected by block ID groups, not by metadata variant.
 
 Additional integrated capture, `evidence/opacidade-30-petroleo.png`, shows stone at 30% opacity, diamond with its real texture, and black oil. It was captured in a separate diagnostic world with the full pack. The temporary diagnostic jar was removed.
+
+## Title-screen configuration
+
+Java 8 build and checks passed. TitleMenuCheck verifies the native X-Ray button without a world/player, opening the existing settings screen, editing range before entering a world, Escape returning to the parent menu, duplicate prevention, coexistence with Generic Assistant and World Sync buttons, and button alignment after menu recreation at different dimensions. The button is maintained by a direct FML render callback and needs neither companion mod. Live visual/controller verification remains pending.

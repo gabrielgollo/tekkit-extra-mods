@@ -35,6 +35,7 @@ public final class mod_XRayDeluxe extends BaseMod implements forge.IRenderWorldL
             public void afterRenderContext() { org.lwjgl.opengl.GL11.glPopAttrib(); }
         });
         forge.MinecraftForgeClient.registerRenderLastHandler(this);
+        cpw.mods.fml.common.FMLCommonHandler.instance().registerTickHandler(new XRayMenuTicker());
         ModLoader.setInGameHook(this, true, false);
     }
 

@@ -5,7 +5,8 @@ Client-side ModLoader/BaseMod mod, compiled against Forge Mod Loader 2.2 from th
 ## Controls
 
 - **X**: toggle X-Ray. Blocks not selected as ores use Minecraft's transparent atlas tile; selected ores remain visible.
-- **C**: open the settings panel.
+- **C**: open the settings panel in-game.
+- **X-Ray Deluxe** on the title screen (upper-right corner): configure the mod before opening a world. Escape returns to the title screen.
 - Still and flowing lava remain visible while X-Ray is enabled, within the configured range, even when no ores are selected.
 - On the **Hidden opacity** row, click the left side to decrease opacity or the right side to increase it in 10% steps from 0% to 100%. The value is saved as `hiddenOpacity` in the configuration.
 - Click ore names in the panel to select or deselect them. Selection is saved automatically. Click the status to toggle X-Ray; press **ESC** to close.

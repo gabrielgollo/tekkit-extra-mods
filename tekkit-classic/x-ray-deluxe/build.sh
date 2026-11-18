@@ -12,8 +12,7 @@ rm -f "$DIST_DIR"/gabrielgollo_x-ray-deluxe-*-mc1.2.5.jar
 javac -source 8 -target 8 -Xlint:-options \
   -cp "$PACK_ROOT/bin/modpack.jar:$PACK_ROOT/bin/minecraft.jar:$PACK_ROOT/../../libraries/org/lwjgl/lwjgl/lwjgl/2.9.0/lwjgl-2.9.0.jar" \
   -d "$BUILD_DIR" \
-  "$PROJECT_DIR/src/mod_XRayDeluxe.java" \
-  "$PROJECT_DIR/src/XRayDeluxeGui.java"
+  "$PROJECT_DIR/src/"*.java
 cp "$PROJECT_DIR/src/mcmod.info" "$BUILD_DIR/mcmod.info"
 unzip -p "$PACK_ROOT/bin/minecraft.jar" terrain.png > "$BUILD_DIR/xray-hidden.png"
 cp "$PROJECT_DIR/x-ray-deluxe-defaults.json" "$BUILD_DIR/x-ray-deluxe-defaults.json"

@@ -1,6 +1,12 @@
 import net.minecraft.client.Minecraft;
 
 final class XRayDeluxeGui extends vp {
+    private final vp parent;
+
+    XRayDeluxeGui() { this(null); }
+
+    XRayDeluxeGui(vp parent) { this.parent = parent; }
+
     public void a(int mouseX, int mouseY, float tick) {
         super.a();
         int left=(q-280)/2, top=(r-240)/2;
@@ -55,6 +61,7 @@ final class XRayDeluxeGui extends vp {
         }
     }
     protected void a(char character,int code) {
+        if(code==1 && parent!=null) { p.a(parent); return; }
         if(code==45) mod_XRayDeluxe.setEnabled(p,!mod_XRayDeluxe.enabled);
         else super.a(character,code);
     }
